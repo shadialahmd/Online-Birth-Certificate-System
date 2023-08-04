@@ -63,7 +63,7 @@ if (strlen($_SESSION['obcsuid']==0)) {
     
     <!-- Header top area start-->
     <div class="wrapper-pro">
-      <?php include_once('includes/sidebar.php');?>
+      <?php //include_once('includes/sidebar.php');?>
         <!-- Header top area start-->
        <?php include_once('includes/header.php');?>
             <!-- Header top area end-->
