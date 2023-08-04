@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
-if (strlen($_SESSION['obcsuid']==0)) {
+if (strlen($_SESSION['obcsaid']==0)) {
   header('location:logout.php');
   } else{
 
@@ -14,7 +14,7 @@ if (strlen($_SESSION['obcsuid']==0)) {
 
 <head>
   
-    <title>admin Dashboard | Online Birth Certificate System</title>
+    <title>Dashboard | Online Birth Certificate System</title>
     
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i,800" rel="stylesheet">
     <!-- Bootstrap CSS
@@ -204,8 +204,7 @@ $totalrejapp=$query->rowCount();
                     </div>
                 </div>
             </div>
-          
-
+  
         
         
          
