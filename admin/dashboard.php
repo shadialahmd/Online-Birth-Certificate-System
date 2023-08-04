@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
-if (strlen($_SESSION['obcsaid']==0)) {
+if (strlen($_SESSION['obcsuid']==0)) {
   header('location:logout.php');
   } else{
 
@@ -14,7 +14,7 @@ if (strlen($_SESSION['obcsaid']==0)) {
 
 <head>
   
-    <title>Dashboard | Online Birth Certificate System</title>
+    <title>admin Dashboard | Online Birth Certificate System</title>
     
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i,800" rel="stylesheet">
     <!-- Bootstrap CSS
@@ -63,7 +63,7 @@ if (strlen($_SESSION['obcsaid']==0)) {
     
     <!-- Header top area start-->
     <div class="wrapper-pro">
-      <?php //include_once('includes/sidebar.php');?>
+      <?php include_once('includes/sidebar.php');?>
         <!-- Header top area start-->
        <?php include_once('includes/header.php');?>
             <!-- Header top area end-->
@@ -96,115 +96,37 @@ if (strlen($_SESSION['obcsaid']==0)) {
             <div class="income-order-visit-user-area">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-4">
-                             <?php 
-$sql ="SELECT ID from tblapplication where Status is null ";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$totalnewapp=$query->rowCount();
-?>
+                        <div class="col-lg-12">
                             <div class="income-dashone-total income-monthly shadow-reset nt-mg-b-30">
-                               
                                 <div class="income-title">
                                     <div class="main-income-head">
-                                        <h2>Total</h2>
+                                       <?php
+$uid=$_SESSION['obcsuid'];
+$sql="SELECT FirstName,LastName,MobileNumber from  tbluser where ID=:uid";
+$query = $dbh -> prepare($sql);
+$query->bindParam(':uid',$uid,PDO::PARAM_STR);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+if($query->rowCount() > 0)
+{
+foreach($results as $row)
+{               ?> 
                                         <div class="main-income-phara">
-                                            <p>New Application</p>
+                                           <h2>Welcome to Online Birth Certificate Registration <?php  echo $row->FirstName;?>  <?php  echo $row->LastName;?>!!!</h2>
                                         </div>
+                                        <?php $cnt=$cnt+1;}} ?>
                                     </div>
                                 </div>
-                                <div class="income-dashone-pro">
-                                    <div class="income-rate-total">
-                                        <div class="price-adminpro-rate">
-                                            <h3><span class="counter"><?php echo htmlentities($totalnewapp);?></span></h3>
-                                        </div>
-                                        <div class="price-graph">
-                                            <span id="sparkline1"></span>
-                                        </div>
-                                    </div>
-                                    <div class="income-range">
-                                       
-                                        <a class="block text-center" href="new-birth-application.php"><strong style="color:white">View Detail</strong></a>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
+                              
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <?php 
-$sql ="SELECT ID from tblapplication where Status='Verified' ";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$totalverapp=$query->rowCount();
-?>
-                            <div class="income-dashone-total orders-monthly shadow-reset nt-mg-b-30">
-                                 
-                                <div class="income-title">
-
-                                    <div class="main-income-head">
-                                        <h2 style="color: black">Total</h2>
-                                        <div class="main-income-phara order-cl">
-                                            <p>Verified Application</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="income-dashone-pro">
-                                    <div class="income-rate-total">
-                                        <div class="price-adminpro-rate">
-                                            <h3><span class="counter"><?php echo htmlentities($totalverapp);?></span></h3>
-                                        </div>
-                                        <div class="price-graph">
-                                            <span id="sparkline6"></span>
-                                        </div>
-                                    </div>
-                                    <div class="income-range order-cl">
-                                        <a class="block text-center" href="verified-birth-application.php"><strong style="color:white">View Detail</strong></a>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <?php 
-$sql ="SELECT ID from tblapplication where Status='Rejected' ";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$totalrejapp=$query->rowCount();
-?>
-                            <div class="income-dashone-total visitor-monthly shadow-reset nt-mg-b-30">
-                                
-                                <div class="income-title">
-                                    <div class="main-income-head">
-                                        <h2>Total</h2>
-                                        <div class="main-income-phara visitor-cl">
-                                            <p>Rejected Application</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="income-dashone-pro">
-                                    <div class="income-rate-total">
-                                        <div class="price-adminpro-rate">
-                                            <h3><span class="counter"><?php echo htmlentities($totalrejapp);?></span></h3>
-                                        </div>
-                                        <div class="price-graph">
-                                            <span id="sparkline2"></span>
-                                        </div>
-                                    </div>
-                                    <div class="income-range visitor-cl">
-                                        <a class="block text-center" href="verified-birth-application.php"><strong style="color:white">View Detail</strong></a>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
+                    
                     </div>
                 </div>
             </div>
-  
+          
+
         
         
          
